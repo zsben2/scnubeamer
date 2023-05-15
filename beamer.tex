@@ -1,0 +1,142 @@
+% 发行版: TeXLive 2021 以上
+% 编译命令 XeLaTeX -> Biber -> XeLaTeX -> XeLaTeX
+% 也可以用 latexmk 编译
+\documentclass[logoopacity=0.1]{scnubeamer}
+
+% 字体设置
+\setCJKmainfont{SimSun}[
+  Mapping    = fullwidth-stop, % 将句号映射为句点
+  ItalicFont = KaiTi, % 设置斜体为楷体
+  BoldFont   = SimHei, % 设置粗体为黑体
+  % AutoFakeBold = 3, % 若需加粗宋体，可取消本行注释，并注释上一行
+]
+
+% 用 biblatex 管理参考文献
+\usepackage[style=gb7714-2015,backend=biber,gbnamefmt=lowercase]{biblatex}
+\addbibresource{refs.bib}
+
+% 定义定理环境（不需要的可以删掉）
+\newtheorem{proposition}{命题}[section]
+\newtheorem{conjecture}{猜想}[section]
+% 重新定义 lemma, definition, corollary, example 环境以使用独立计数器
+% 参考自 https://tex.stackexchange.com/a/123757
+\usepackage{etoolbox}
+\undef\lemma
+\undef\corollary
+\undef\definition
+\undef\example
+\newtheorem{lemma}{引理}[section]
+\newtheorem{corollary}{推论}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{定义}[section]
+\theoremstyle{example}
+\newtheorem{example}{例}[section]
+
+% 首页信息
+\title{摸鱼学研究}
+\author{\begin{tabular}{s{3em}@{：}l}
+答辩人&张三\\
+专业&划水\\
+导师&李四\\
+\end{tabular}}
+\date{2023年5月15日}
+
+
+\begin{document}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\section{文献引用示例}
+
+\begin{frame}{文献引用示例一}
+示例一\parencite{RN61,RN49}\footendcitetext{RN61}\footendcitetext{RN49}。
+\end{frame}
+
+\begin{frame}{文献引用示例二}
+示例二\cite{RN16}。
+\end{frame}
+
+\begin{frame}{文献引用示例三}
+示例三\footendcite{RN122}。
+\end{frame}
+
+\section{定理跳转示例}
+
+\begin{frame}{定理类环境示例一}
+\begin{theorem}[勾股定理]\hyperlabel{thm:1}
+可以跳转到证明的定理。
+\end{theorem}
+
+\begin{proposition}\hyperlabel{prop:1}
+可以跳转到证明的命题。
+\end{proposition}
+\end{frame}
+
+\begin{frame}{定理类环境示例二}
+\begin{theorem}\label{thm:2}
+不能跳转到证明的定理。
+\end{theorem}
+
+\begin{proposition}\label{prop:2}
+不能跳转到证明的命题。
+\end{proposition}
+\end{frame}
+
+\begin{frame}{定理类环境示例三}
+\begin{corollary}\hyperlabel{cor:1}
+除了theorem和proposition环境外，其他定理类环境均未设计跳转至证明的功能。
+\end{corollary}
+
+\begin{corollary}\label{cor:2}
+除了theorem和proposition环境外，其他定理类环境均未设计跳转至证明的功能。
+\end{corollary}
+\end{frame}
+
+\section{证明示例}
+
+\begin{frame}[allowframebreaks]{证明环境示例一}
+\begin{proof}[\proofof{thm:1}]
+证明环境可断页。
+
+例如这是一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。一个超级长的定理。
+\end{proof}
+\end{frame}
+
+\begin{frame}{\proofof{prop:1}}
+或者你可能想直接称本帧标题为“定理XX的证明”，这样可以少套一层proof环境。
+
+但是要记得手工打印证明结束的符号。
+\qed
+\end{frame}
+
+\section{其他跳转示例}
+
+\begin{frame}
+我们也可以手工设置跳转，例如\gotolabel{blank_page}{跳转到空白页}
+
+或者\gotolabel{thm:1}{返回\Cref{thm:1}}
+
+又或者\gotolabel{thm:2}{返回\Cref{thm:2}}
+
+但是要尽量避免按钮所在行的文字特别特别特别特别特别特别长，以至于剩余空间不足以容纳整个按钮的情况%\\
+\gotolabel{prop:1}{这个按钮看不见了怎么办}
+
+但是要尽量避免按钮所在行的文字特别特别特别特别特别特别特别长，以至于剩余空间不足以容纳整个按钮的情况。\\
+\gotolabel{prop:1}{这个按钮现在就看见了}
+\end{frame}
+
+\begin{frame}[label=blank_page]
+
+\end{frame}
+
+\begin{frame}[allowframebreaks]{参考文献}
+\printbibliography
+\end{frame}
+
+\begin{frame}
+别看了，参考文献里的数据是写在refs.bib文件里的。
+\end{frame}
+
+\end{document}
