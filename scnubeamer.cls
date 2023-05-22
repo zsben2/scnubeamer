@@ -105,9 +105,7 @@
     \footendcitetext {#1}
   }
 
-\cs_undefine:N \Bbbk
-\RequirePackage [ lite ] { mtpro2 }
-\RequirePackage { mathtools, mathrsfs }
+\RequirePackage { mathtools, mathrsfs, amssymb, newtxmath }
 \allowdisplaybreaks [ 4 ]
 \RequirePackage { amsthm }
 
